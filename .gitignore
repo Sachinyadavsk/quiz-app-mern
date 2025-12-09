@@ -1,0 +1,66 @@
+# Node / dependency folders
+node_modules/
+.pnp/
+.pnp.js
+
+# Build output
+/dist
+/build
+/.next
+/out
+/.parcel-cache
+/.vercel
+
+# Environment files (do NOT commit secrets)
+.env
+.env.local
+.env.*.local
+.env.production
+.env.development
+.env.test
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDEs / editors
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Mac/Linux swap & temp
+*.swp
+*~
+*.tmp
+
+# Test coverage
+coverage/
+
+# TypeScript
+*.tsbuildinfo
+
+# ESLint cache
+.eslintcache
+
+# Yarn v2 PnP
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+
+# Misc
+.vite
+dist/
+.cache/
+reports/
+
+# Optional: local secrets or editor-specific
+/local.env
+secrets.json
