@@ -2,6 +2,8 @@ import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import Login from './components/Login'
+import SignUp from './components/SignUp'
+import Sidebar from './components/Sidebar'
 
 
 const App = () => {
@@ -9,6 +11,9 @@ const App = () => {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<SignUp />} />
+      <Route path="/menu" element={<Sidebar />} />
+      
     </Routes>
   )
 }

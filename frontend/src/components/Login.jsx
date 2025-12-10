@@ -9,7 +9,7 @@ const Login = ({ onLoginSuccess = null }) => {
     const navigate = useNavigate();
     const [password, SetPassword] = useState("");
     const [email, SetEmail] = useState("");
-    const [showPassword, SetShowPassword] = useState(false);
+    const [showPassword, SetShowPassword] = useState("");
     const [errors, SetErrors] = useState("");
     const [loading, SetLoading] = useState("");
     const [submitError, SetSubmitError] = useState("");
@@ -20,7 +20,8 @@ const Login = ({ onLoginSuccess = null }) => {
         SetSubmitError('');
         const validation = validate();
         SetErrors(validation);
-        if (object.keys(validation).lenght) return;
+        if (Object.keys(validation).length) return;
+
         SetLoading(true);
         try {
             const payload = { email: email.trim().toLowerCase(), password };
@@ -36,24 +37,34 @@ const Login = ({ onLoginSuccess = null }) => {
                 // igore
             }
 
-            if (!resp.ok) { 
-                const msg = data ?.message || 'Login Failed';
+            if (!resp.ok) {
+                const msg = data?.message || 'Login Failed';
                 SetSubmitError(msg);
                 return;
             }
-            if(data?.token){
-               try {
-                localStorage.setItem('authToken', data.token);
-                localStorage.setItem(
-                    'currectUser',
-                        JSON.stringify(data.user || {email:payload.email})
-                )
-               } catch (error) {
-                // ignore
-               }
+            if (data?.token) {
+                try {
+                    localStorage.setItem('authToken', data.token);
+                    localStorage.setItem(
+                        'currectUser',
+                        JSON.stringify(data.user || { email: payload.email })
+                    )
+                } catch (errors) {
+                    // ignore
+                }
             }
-        } catch (error) {
-
+            const user = data.user || { email: payload.email };
+            window.dispatchEvent(
+                new CustomEvent("authChanged", { detail: { user } })
+            );
+            if (typeof onLoginSuccess === 'function') onLoginSuccess(user);
+            navigate('/', { replace: true });
+        } catch (err) {
+            console.error('Login  error', err);
+            SetSubmitError('Network Error');
+        }
+        finally {
+            SetLoading(false);
         }
 
     }
@@ -126,8 +137,8 @@ const Login = ({ onLoginSuccess = null }) => {
                                         <span className={loginStyles.inputIcon}>
                                             <Lock className={loginStyles.inputIconInner} />
                                         </span>
-                                        <input type={showPassword ? 'text' : 'password'} name="password" value={showPassword} onChange={(e) => {
-                                            SetEmail(e.target.value);
+                                        <input type="text" name="password" onChange={(e) => {
+                                            SetPassword(e.target.value);
                                             if (errors.password)
                                                 SetErrors((s) => ({
                                                     ...s, password: undefined
@@ -177,7 +188,7 @@ const Login = ({ onLoginSuccess = null }) => {
                                             <span className={loginStyles.signupText}>
                                                 Dot' have an  account?
                                             </span>
-                                            <Link to="register" className={loginStyles.signupLink}>
+                                            <Link to="/register" className={loginStyles.signupLink}>
                                                 Create Account
                                             </Link>
                                         </div>
@@ -188,7 +199,7 @@ const Login = ({ onLoginSuccess = null }) => {
                     </div>
                 </form>
             </div>
-
+            <style className={loginStyles.animations}></style>
         </div>
     )
 }

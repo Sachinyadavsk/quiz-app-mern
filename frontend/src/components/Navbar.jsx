@@ -1,12 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import navbarStyles from '../assets/dummyStyles.js';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { Award, LogIn, LogOut, Menu, X } from 'lucide-react'
+import { Award, LogIn, LogOut, Menu, X } from 'lucide-react';
 const Navbar = (logoSrc) => {
 
     const navigate = useNavigate();
     const [loggedIn, setLoggedIn] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
+    
+    useEffect(() => {
+        try {
+            const u = localStorage.getItem("authToken");
+            setLoggedIn(!!u);
+        } catch (e) {
+            setLoggedIn(false);
+        }
+    })
+    
 
     //Lgout function
     const handleLogout = () => {
