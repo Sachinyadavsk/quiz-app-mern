@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api/vi/auth',userRouter);
-app.use('api/vi/results',resultRouter);
+app.use('api/vi',resultRouter);
 // app.get('/', (req, res) => {
 //     res.send('API is running...');
 // });
